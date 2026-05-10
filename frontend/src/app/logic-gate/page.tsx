@@ -4,9 +4,9 @@ export default function LogicGatePage() {
   return (
     <GamePage
       title="Logic Gate Trainer"
-      subtitle="Selesaikan tantangan logic gate dalam waktu 3 menit! Waktu habis = GUGUR."
+      subtitle="Selesaikan tantangan logic gate dalam waktu 2 menit! Waktu habis = GUGUR."
       apiPath="/api/logic-gate-records"
-      timeLimitMs={180000}
+      timeLimitMs={120000}
     />
   );
 }

@@ -133,7 +133,7 @@ const Timer = forwardRef<TimerRef, TimerProps>(
         {timeLimitMs && timerState === "RUNNING" && (
           <div className="w-full bg-gray-800 rounded-full h-2 mb-6 overflow-hidden">
             <div
-              className="h-full rounded-full transition-all bg-green-500"
+              className="h-full rounded-full transition-none bg-green-500"
               style={{ width: `${Math.min((timeMs / timeLimitMs) * 100, 100)}%`,
                 backgroundColor: timeMs / timeLimitMs > 0.75 ? '#ef4444' : timeMs / timeLimitMs > 0.5 ? '#f59e0b' : '#22c55e'
               }}
