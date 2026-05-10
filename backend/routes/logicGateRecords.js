@@ -8,41 +8,33 @@ const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 const adapter = new PrismaPg(pool);
 const prisma = new PrismaClient({ adapter });
 
-// Get leaderboard filtered by game_type, top 10 ordered by time_ms ascending
+// GET top 10 logic gate records ordered by time_ms ascending
 router.get('/', async (req, res) => {
-  const { game = 'RUBIK' } = req.query;
   try {
-    const records = await prisma.record.findMany({
-      where: { game_type: game.toString().toUpperCase() },
+    const records = await prisma.logicGateRecord.findMany({
       take: 10,
       orderBy: { time_ms: 'asc' },
     });
     res.json(records);
   } catch (error) {
-    console.error("Error fetching records:", error);
+    console.error("Error fetching logic gate records:", error);
     res.status(500).json({ error: 'Failed to fetch leaderboard' });
   }
 });
 
-// Create a new record
+// POST a new logic gate record
 router.post('/', async (req, res) => {
-  const { participant_name, time_ms, game_type = 'RUBIK' } = req.body;
-
+  const { participant_name, time_ms } = req.body;
   if (!participant_name || typeof time_ms !== 'number') {
-    return res.status(400).json({ error: 'Invalid data. participant_name and time_ms are required.' });
+    return res.status(400).json({ error: 'Invalid data.' });
   }
-
   try {
-    const newRecord = await prisma.record.create({
-      data: {
-        participant_name,
-        time_ms,
-        game_type: game_type.toString().toUpperCase(),
-      },
+    const newRecord = await prisma.logicGateRecord.create({
+      data: { participant_name, time_ms },
     });
     res.status(201).json(newRecord);
   } catch (error) {
-    console.error("Error saving record:", error);
+    console.error("Error saving logic gate record:", error);
     res.status(500).json({ error: 'Failed to save record' });
   }
 });

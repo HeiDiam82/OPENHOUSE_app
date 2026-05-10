@@ -1,24 +1,22 @@
-const express = require('express');
-const cors = require('express');
 const dotenv = require('dotenv');
-const recordsRouter = require('./routes/records');
-
 dotenv.config();
+const express = require('express');
+const corsMiddleware = require('cors');
+const binaryRecordsRouter = require('./routes/binaryRecords');
+const logicGateRecordsRouter = require('./routes/logicGateRecords');
 
 const app = express();
-const corsMiddleware = require('cors');
-
 app.use(corsMiddleware());
 app.use(express.json());
 
-app.use('/api/records', recordsRouter);
+app.use('/api/binary-records', binaryRecordsRouter);
+app.use('/api/logic-gate-records', logicGateRecordsRouter);
 
 app.get('/', (req, res) => {
-  res.send('Rubik Timer API is running');
+  res.send('RISTEK Games Timer API is running');
 });
 
 const PORT = process.env.PORT || 5000;
-
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
